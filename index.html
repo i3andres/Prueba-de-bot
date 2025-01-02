@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Simple Clicker Web App">
+  <title>Clicker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    h1 {
+      color: #333;
+    }
+    #counter {
+      font-size: 3rem;
+      margin: 20px 0;
+      color: #007bff;
+    }
+    button {
+      font-size: 1.5rem;
+      padding: 15px 30px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Clicker Web App</h1>
+  <div id="counter">0</div>
+  <button id="clickButton">¡Haz clic!</button>
+
+  <script>
+    // Inicializar contador
+    let count = 0;
+
+    // Referenciar elementos
+    const counterDisplay = document.getElementById("counter");
+    const clickButton = document.getElementById("clickButton");
+
+    // Incrementar el contador al hacer clic
+    clickButton.addEventListener("click", () => {
+      count++;
+      counterDisplay.textContent = count;
+    });
+
+    // Telegram WebApp SDK para expandir la aplicación
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.expand(); // Expande la app a pantalla completa
+    }
+  </script>
+</body>
+</html>
