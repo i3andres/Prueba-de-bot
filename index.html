@@ -17,15 +17,25 @@
       justify-content: center;
       align-items: center;
       background: url('background-image.jpg') no-repeat center center/cover;
-      overflow: hidden;
+      animation: dynamicBackground 30s ease infinite;
       color: #fff;
+      overflow: hidden;
     }
 
-    /* Fondo dinámico */
     @keyframes dynamicBackground {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    /* Estilos del contador */
+    #counter {
+      font-size: 3rem;
+      color: #007bff;
+      background: rgba(0, 0, 0, 0.5); /* Fondo transparente */
+      padding: 10px 20px;
+      border-radius: 10px;
+      margin: 20px 0;
     }
 
     /* Estilo de la barra de energía */
@@ -38,7 +48,6 @@
     }
     .energy-fill {
       height: 100%;
-      width: 100%;
       background: #00ff00;
       border-radius: 5px;
       transition: width 1s ease;
@@ -77,12 +86,39 @@
     #refillButton {
       margin-top: 20px;
     }
+
+    /* Estilo de la imagen del cocodrilo */
+    #clickButton {
+      width: 150px;
+      height: 150px;
+      background-image: url('cocodrilo-image.jpg'); /* Imagen del cocodrilo */
+      background-size: cover;
+      background-position: center;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    #clickButton:hover {
+      transform: scale(1.1);
+    }
   </style>
 </head>
 <body>
 
-  <h1>Granja Clicker</h1>
+  <!-- Contador de puntos -->
+  <div id="counter">0</div>
 
+  <!-- Barra de energía -->
+  <div class="energy-bar">
+    <div class="energy-fill" id="energyFill"></div>
+  </div>
+
+  <!-- Botón para hacer clic (Cocodrilo) -->
+  <button id="clickButton"></button>
+
+  <!-- Perfil -->
   <div class="box" id="profile">
     <img src="profile-pic.jpg" alt="Profile" width="50" height="50">
     <div class="stat" id="playerName">Usuario</div>
@@ -92,6 +128,7 @@
     <button class="button" id="applyPromo">Aplicar Código</button>
   </div>
 
+  <!-- Amigos -->
   <div class="box" id="friends">
     <div>👫</div>
     <div class="stat" id="friendsCount">Amigos: 0</div>
@@ -99,15 +136,18 @@
     <button class="button" id="inviteFriends">Invitar Amigos</button>
   </div>
 
+  <!-- Juegos -->
   <div class="box" id="games">
     <div class="stat">Juegos: Coming Soon</div>
   </div>
 
+  <!-- Recompensas -->
   <div class="box" id="rewards">
     <div class="stat">Bonificaciones de Puntos</div>
     <button class="button">Reclamar Puntos</button>
   </div>
 
+  <!-- Impulsos -->
   <div class="box" id="boosts">
     <div class="stat">Impulsos</div>
     <button class="button">Aumentar Taps</button>
@@ -116,12 +156,7 @@
     <button class="button">Llenado de Energía</button>
   </div>
 
-  <div class="energy-bar">
-    <div class="energy-fill" id="energyFill"></div>
-  </div>
-
-  <button class="button" id="clickButton">Cocodrilo Clicker</button>
-
+  <!-- Botón Refill -->
   <button id="refillButton" class="button">Refill Energía</button>
 
   <script>
@@ -136,7 +171,7 @@
       if (energy > 0) {
         points++;
         energy--;
-        document.getElementById("totalPoints").textContent = `Puntos Totales: ${points}`;
+        document.getElementById("counter").textContent = points;
         updateEnergyBar();
       }
     });
@@ -178,7 +213,6 @@
         updateEnergyBar();
       }
     }, 1000); // Aumenta 1 de energía por segundo
-
   </script>
 
 </body>
