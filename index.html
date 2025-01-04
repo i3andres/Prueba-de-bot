@@ -8,15 +8,14 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
       margin: 0;
       padding: 0;
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      background: url('background-image.jpg') no-repeat center center/cover;
+      background: url('images/background-image.jpg') no-repeat center center/cover;
       animation: dynamicBackground 30s ease infinite;
       color: #fff;
       overflow: hidden;
@@ -28,14 +27,51 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Estilos del contador */
-    #counter {
-      font-size: 3rem;
-      color: #007bff;
-      background: rgba(0, 0, 0, 0.5); /* Fondo transparente */
-      padding: 10px 20px;
+    /* Contenedor principal para los cuadros */
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    /* Estilo de los cuadros pequeños */
+    .box {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px;
       border-radius: 10px;
-      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 200px;
+      text-align: center;
+      margin: 5px;
+    }
+
+    .button {
+      background: #ff0066;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+    }
+
+    /* Estilo del contador */
+    #counter {
+      font-size: 2rem;
+      color: #007bff;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 10px;
+      margin: 10px 0;
     }
 
     /* Estilo de la barra de energía */
@@ -53,45 +89,34 @@
       transition: width 1s ease;
     }
 
-    /* Estilo de los cuadros y botones */
-    .box {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 20px;
-      margin: 10px;
-      border-radius: 10px;
-      display: inline-block;
-      width: 250px;
-      text-align: center;
+    /* Estilo para el contenedor de la foto de perfil */
+    #profilePicContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
     }
 
-    .button {
-      background: #ff0066;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
+    #profilePic {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      background-image: url('images/cocodrilo-image.jpg'); /* Imagen por defecto */
+      background-size: cover;
+      background-position: center;
     }
 
-    .button:hover {
-      transform: scale(1.1);
+    /* Estilo para los elementos de perfil */
+    #profilePicInput {
+      margin-top: 10px;
     }
 
-    .stat {
-      font-size: 1.2rem;
-      margin: 10px 0;
-    }
-
-    /* Botón "Refill" */
-    #refillButton {
-      margin-top: 20px;
-    }
-
-    /* Estilo de la imagen del cocodrilo */
+    /* Estilo para el círculo del clicker */
     #clickButton {
       width: 150px;
       height: 150px;
-      background-image: url('cocodrilo-image.jpg'); /* Imagen del cocodrilo */
+      background-image: url('images/cocodrilo-image.jpg'); /* Imagen del cocodrilo */
       background-size: cover;
       background-position: center;
       border: none;
@@ -99,7 +124,9 @@
       cursor: pointer;
       transition: transform 0.2s;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
     }
+
     #clickButton:hover {
       transform: scale(1.1);
     }
@@ -115,55 +142,77 @@
     <div class="energy-fill" id="energyFill"></div>
   </div>
 
-  <!-- Botón para hacer clic (Cocodrilo) -->
+  <!-- Círculo del clicker con la imagen del cocodrilo -->
   <button id="clickButton"></button>
 
-  <!-- Perfil -->
-  <div class="box" id="profile">
-    <img src="profile-pic.jpg" alt="Profile" width="50" height="50">
-    <div class="stat" id="playerName">Usuario</div>
-    <div class="stat" id="totalPoints">Puntos Totales: 0</div>
-    <div class="stat" id="wallet">Billetera: No conectada</div>
-    <input type="text" id="promoCode" placeholder="Ingrese código promocional">
-    <button class="button" id="applyPromo">Aplicar Código</button>
-  </div>
+  <!-- Contenedor de cuadros -->
+  <div class="container">
+    <!-- Cuadro de perfil -->
+    <div class="box" id="profile">
+      <div id="profilePicContainer">
+        <div id="profilePic"></div> <!-- Imagen de perfil -->
+      </div>
+      <input type="file" id="profilePicInput" accept="image/*">
+      <div class="stat" id="playerName">Usuario</div>
+      <div class="stat" id="totalPoints">Puntos Totales: 0</div>
+      <div class="stat" id="wallet">Billetera: No conectada</div>
+      <button class="button" id="applyPromo">Aplicar Código</button>
+    </div>
 
-  <!-- Amigos -->
-  <div class="box" id="friends">
-    <div>👫</div>
-    <div class="stat" id="friendsCount">Amigos: 0</div>
-    <div class="stat" id="giftedPoints">Puntos Regalados: 0</div>
-    <button class="button" id="inviteFriends">Invitar Amigos</button>
-  </div>
+    <!-- Cuadro de amigos -->
+    <div class="box" id="friends">
+      <div>👫</div>
+      <div class="stat" id="friendsCount">Amigos: 0</div>
+      <div class="stat" id="giftedPoints">Puntos Regalados: 0</div>
+      <button class="button" id="inviteFriends">Invitar Amigos</button>
+    </div>
 
-  <!-- Juegos -->
-  <div class="box" id="games">
-    <div class="stat">Juegos: Coming Soon</div>
-  </div>
+    <!-- Cuadro de juegos -->
+    <div class="box" id="games">
+      <div class="stat">Juegos: Coming Soon</div>
+    </div>
 
-  <!-- Recompensas -->
-  <div class="box" id="rewards">
-    <div class="stat">Bonificaciones de Puntos</div>
-    <button class="button">Reclamar Puntos</button>
-  </div>
+    <!-- Cuadro de recompensas -->
+    <div class="box" id="rewards">
+      <div class="stat">Bonificaciones de Puntos</div>
+      <button class="button">Reclamar Puntos</button>
+    </div>
 
-  <!-- Impulsos -->
-  <div class="box" id="boosts">
-    <div class="stat">Impulsos</div>
-    <button class="button">Aumentar Taps</button>
-    <button class="button">Aumentar Limite de Energía</button>
-    <button class="button">Añadir Cocodrilo</button>
-    <button class="button">Llenado de Energía</button>
-  </div>
+    <!-- Cuadro de impulsos -->
+    <div class="box" id="boosts">
+      <div class="stat">Impulsos</div>
+      <button class="button">Aumentar Taps</button>
+      <button class="button">Aumentar Limite de Energía</button>
+      <button class="button">Añadir Cocodrilo</button>
+      <button class="button">Llenado de Energía</button>
+    </div>
 
-  <!-- Botón Refill -->
-  <button id="refillButton" class="button">Refill Energía</button>
+    <!-- Botón Refill -->
+    <div class="box">
+      <button class="button" id="refillButton">Refill Energía</button>
+    </div>
+  </div>
 
   <script>
     let points = 0;
     let energy = 100;
     let maxEnergy = 100;
     let lastRefill = Date.now();
+
+    // Función para cambiar la foto de perfil
+    const profilePicInput = document.getElementById("profilePicInput");
+    const profilePic = document.getElementById("profilePic");
+    
+    profilePicInput.addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          profilePic.style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
 
     // Botón de click (Cocodrilo)
     const clickButton = document.getElementById("clickButton");
@@ -198,22 +247,4 @@
     // Aplicar código promocional
     const applyPromoButton = document.getElementById("applyPromo");
     applyPromoButton.addEventListener("click", () => {
-      const promoCode = document.getElementById("promoCode").value;
-      if (promoCode === "GRANJA10") {
-        points += 10;  // Por ejemplo, 10 puntos extras con el código promocional
-        document.getElementById("totalPoints").textContent = `Puntos Totales: ${points}`;
-        alert("Código promocional aplicado exitosamente.");
-      }
-    });
-
-    // Función para aumentar la energía por segundo
-    setInterval(() => {
-      if (energy < maxEnergy) {
-        energy++;
-        updateEnergyBar();
-      }
-    }, 1000); // Aumenta 1 de energía por segundo
-  </script>
-
-</body>
-</html>
+      const promoCode = document.getElementById("promoCode
