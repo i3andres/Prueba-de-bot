@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Granja Clicker">
   <title>Granja Clicker</title>
   <style>
     body {
@@ -10,12 +11,14 @@
       margin: 0;
       padding: 0;
       height: 100vh;
-      background: url('images/background-image.jpg') no-repeat center center/cover;
-      animation: dynamicBackground 30s ease infinite;
       display: flex;
       flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
+      background: url('images/background-image.jpg') no-repeat center center/cover;
+      animation: dynamicBackground 30s ease infinite;
       color: #fff;
+      overflow: hidden;
     }
 
     @keyframes dynamicBackground {
@@ -24,157 +27,199 @@
       100% { background-position: 0% 50%; }
     }
 
-    .counter {
-      font-size: 4rem;
-      font-weight: bold;
-      margin: 20px 0;
-      color: #f1c40f;
-      text-align: center;
+    /* Contador de puntos */
+    #counter {
+      font-size: 3rem;
+      color: #fff;
+      margin-top: 20px;
     }
 
-    .level {
-      font-size: 1.2rem;
+    /* Nivel */
+    #level {
+      font-size: 1.5rem;
+      color: #fff;
       margin-bottom: 20px;
-      color: #f39c12;
-      text-align: center;
     }
 
+    /* Botón circular */
     #clickButton {
       width: 150px;
       height: 150px;
-      background: url('images/cocodrilo-image.jpg') no-repeat center center/cover;
-      border: 5px solid #f39c12;
+      background-image: url('images/cocodrilo-image.jpg');
+      background-size: cover;
+      background-position: center;
+      border: none;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-      animation: pulse 1.5s infinite;
+      transition: transform 0.2s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+    #clickButton:active {
+      transform: scale(1.2);
     }
 
+    /* Contenedor principal */
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    /* Recuadros */
+    .box {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 200px;
+      text-align: center;
+    }
+
+    .button {
+      background: #ff0066;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+    }
+
+    /* Barra de energía */
     .energy-bar {
-      width: 80%;
+      width: 90%;
+      background: url('images/coffee-texture.jpg') repeat;
+      background-size: cover;
       height: 20px;
-      background: url('images/coffee-beans-texture.jpg') repeat-x;
+      margin-top: 20px;
       border-radius: 10px;
       overflow: hidden;
-      position: relative;
-      margin: 20px 0;
     }
 
     .energy-fill {
       height: 100%;
-      background: linear-gradient(to right, #d35400, #e67e22);
-      width: 100%;
-      animation: fillEnergy 5s infinite alternate;
+      background: rgba(255, 69, 0, 0.8);
+      border-radius: 10px;
+      transition: width 0.5s ease;
     }
 
-    @keyframes fillEnergy {
-      from { width: 50%; }
-      to { width: 100%; }
-    }
-
+    /* Menú inferior */
     .menu {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
       display: flex;
       justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
       background: rgba(0, 0, 0, 0.7);
       padding: 10px 0;
-      border-radius: 15px;
     }
 
     .menu-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #f1c40f;
-      font-size: 0.8rem;
-    }
-
-    .menu-item img {
-      width: 30px;
-      height: 30px;
-      margin-bottom: 5px;
-    }
-
-    .menu-item span {
+      color: #fff;
+      text-align: center;
       font-size: 0.9rem;
     }
 
-    .refill {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: #e74c3c;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
+    .menu-icon {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
     }
 
-    .refill:hover {
-      background: #c0392b;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Contador -->
-  <div class="counter" id="counter">0</div>
+  <!-- Contador de puntos -->
+  <div id="counter">0</div>
 
   <!-- Nivel -->
-  <div class="level" id="level">Nivel 1</div>
+  <div id="level">Nivel 1</div>
 
-  <!-- Botón clicker -->
+  <!-- Botón circular -->
   <button id="clickButton"></button>
+
+  <!-- Contenedor de cuadros -->
+  <div class="container">
+    <div class="box">
+      <div>Perfil</div>
+      <button class="button">Editar</button>
+    </div>
+    <div class="box">
+      <div>Amigos</div>
+      <button class="button">Invitar</button>
+    </div>
+    <div class="box">
+      <div>Recompensas</div>
+      <button class="button">Reclamar</button>
+    </div>
+    <div class="box">
+      <div>Impulsos</div>
+      <button class="button">Mejorar</button>
+    </div>
+  </div>
 
   <!-- Barra de energía -->
   <div class="energy-bar">
-    <div class="energy-fill" id="energyFill"></div>
+    <div class="energy-fill" id="energyFill" style="width: 100%;"></div>
   </div>
 
   <!-- Menú inferior -->
   <div class="menu">
     <div class="menu-item">
-      <img src="images/profile-icon.png" alt="Perfil">
-      <span>Perfil</span>
+      <div class="menu-icon">👤</div>
+      Perfil
     </div>
     <div class="menu-item">
-      <img src="images/friends-icon.png" alt="Amigos">
-      <span>Amigos</span>
+      <div class="menu-icon">👫</div>
+      Amigos
     </div>
     <div class="menu-item">
-      <img src="images/games-icon.png" alt="Aplicaciones">
-      <span>Aplicaciones</span>
+      <div class="menu-icon">🎮</div>
+      Juegos
     </div>
     <div class="menu-item">
-      <img src="images/rewards-icon.png" alt="Ganar">
-      <span>Ganar</span>
+      <div class="menu-icon">🎁</div>
+      Ganar
     </div>
     <div class="menu-item">
-      <img src="images/boosts-icon.png" alt="Impulsos">
-      <span>Impulsos</span>
+      <div class="menu-icon">⚡</div>
+      Impulsos
     </div>
   </div>
 
-  <!-- Botón refill -->
-  <div class="refill">Refill</div>
-
   <script>
     let points = 0;
-    const counter = document.getElementById("counter");
-    const energyFill = document.getElementById("energyFill");
+    let energy = 100;
+    let maxEnergy = 100;
 
-    document.getElementById("clickButton").addEventListener("click", () => {
-      points++;
-      counter.textContent = points;
+    // Botón de click (Cocodrilo)
+    const clickButton = document.getElementById("clickButton");
+    clickButton.addEventListener("click", () => {
+      if (energy > 0) {
+        points++;
+        energy--;
+        document.getElementById("counter").textContent = points;
+        updateEnergyBar();
+      }
     });
+
+    // Actualizar barra de energía
+    function updateEnergyBar() {
+      const energyPercentage = (energy / maxEnergy) * 100;
+      document.getElementById("energyFill").style.width = energyPercentage + "%";
+    }
   </script>
 
 </body>
