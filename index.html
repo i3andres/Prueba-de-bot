@@ -75,19 +75,23 @@
       margin: 10px 0;
     }
 
-    /* Estilo de la barra de energía */
+    /* Estilo de la barra de energía con textura de granos de café */
     .energy-bar {
       width: 100%;
       background: #333;
       height: 20px;
       margin-top: 20px;
       border-radius: 5px;
+      overflow: hidden;
     }
+
     .energy-fill {
       height: 100%;
-      background: #00ff00;
+      background-image: url('images/coffee-beans-texture.jpeg'); /* Imagen de granos de café */
+      background-size: cover;
+      background-position: center;
       border-radius: 5px;
-      transition: width 1s ease;
+      transition: width 1s ease; /* Animación */
     }
 
     /* Estilo para el círculo del clicker */
@@ -222,7 +226,7 @@
       }
     });
 
-    // Actualizar barra de energía
+    // Actualizar barra de energía con textura de café
     function updateEnergyBar() {
       const energyPercentage = (energy / maxEnergy) * 100;
       document.getElementById("energyFill").style.width = energyPercentage + "%";
@@ -244,8 +248,7 @@
     // Aplicar código promocional
     const applyPromoButton = document.getElementById("applyPromo");
     applyPromoButton.addEventListener("click", () => {
-      const promoCode = document.getElementById("promoCode");
-      // Lógica para aplicar el código promocional
+      alert("Código promocional aplicado.");
     });
   </script>
 </body>
