@@ -6,27 +6,41 @@
   <meta name="description" content="Simple Clicker Web App">
   <title>Clicker</title>
   <style>
-  body { 
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-image: url('images/background.jpeg'); /* Ruta local */
-    background-size: cover;
-    background-position: center;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(45deg, #ff0066, #00b3b3, #ffcc00, #00b3b3);
+      background-size: 400% 400%;
+      animation: gradientAnimation 10s ease infinite;
     }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
     h1 {
       color: #323;
       background: rgba(255, 255, 255, 0.8);
       padding: 10px 20px;
       border-radius: 10px;
     }
+
     #counter {
       font-size: 3rem;
       margin: 20px 0;
@@ -35,18 +49,18 @@
       padding: 10px 20px;
       border-radius: 10px;
     }
-      #clickButton {
-    width: 150px;
-    height: 150px;
-    background-image: url('images/cocodrile.jpeg'); /* Ruta local */
-    background-size: cover;
-    background-position: center;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.2s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    #clickButton {
+      width: 150px;
+      height: 150px;
+      background-color: #ff0066;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
     #clickButton:hover {
       transform: scale(1.1);
     }
@@ -70,11 +84,6 @@
       count++;
       counterDisplay.textContent = count;
     });
-
-    // Telegram WebApp SDK para expandir la aplicación
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.expand(); // Expande la app a pantalla completa
-    }
   </script>
 </body>
 </html>
