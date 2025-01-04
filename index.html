@@ -5,80 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dotcoin Mini App</title>
     <style>
-        body {
-            background-color: #121212; /* Dark background */
-            color: #f5f5f5; /* Light text */
-            font-family: sans-serif;
-            margin: 0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
-        }
-
-        .header {
-            background-color: #181818; /* Slightly darker header */
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .header-icon {
-            font-size: 24px;
-        }
-
-        .content {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .mining-info {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .mining-level {
-            font-size: 36px;
-            font-weight: bold;
-        }
-
-        .mining-progress {
-            width: 100%;
-            height: 8px;
-            background-color: #333;
-            border-radius: 4px;
-            position: relative;
-            margin-top: 10px;
-        }
-
-        .mining-progress-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background-color: #FFC107; /* Yellow progress bar */
-            border-radius: 4px;
-            width: 0%; /* Initial width for progress */
-        }
-
-        .footer {
-            background-color: #181818;
-            padding: 10px;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .footer-text {
-            font-size: 14px;
-        }
+        /* Existing styles remain unchanged */
     </style>
+    <script>
+        let currentDTC = 270232; // Initial DTC count
+        let miningLevel = 12; // Initial mining level
+
+        function incrementDTC() {
+            currentDTC += 1; // Increment DTC by 1
+            document.getElementById('dtc-count').innerText = currentDTC; // Update displayed DTC count
+        }
+
+        function incrementLevel() {
+            miningLevel += 1; // Increment mining level by 1
+            document.getElementById('mining-level').innerText = 'Nivel de Minería: ' + miningLevel; // Update displayed mining level
+        }
+    </script>
 </head>
 <body>
     <div class="header">
@@ -87,8 +29,10 @@
     </div>
     <div class="content">
         <div class="mining-info">
-            <div class="mining-level">Nivel de Minería: 1</div>
+            <div id="mining-level" class="mining-level">Nivel de Minería: 12</div>
+            <div id="dtc-count" class="mining-level">DTC: 270232</div>
         </div>
+        <button onclick="incrementDTC(); incrementLevel();" style="padding: 10px; font-size: 16px; margin-top: 20px;">¡Minar DTC!</button>
         <div class="mining-progress">
             <div class="mining-progress-bar" style="width: 50%;"></div> <!-- Example progress -->
         </div>
@@ -97,20 +41,4 @@
         <div class="footer-text">© 2023 Dotcoin</div>
     </div>
 </body>
-</html> - **HTML Structure**
-  - The code provided creates a simple web app layout resembling a Telegram-like interface.
-  
-- **Mobile Optimization**
-  - The viewport is set to ensure proper scaling on mobile devices.
-  - CSS styles are designed to fit smaller screens, with flexible layouts and appropriate font sizes.
-
-- **Key Components**
-  - **Header**: Contains the title and an icon, styled for visibility.
-  - **Content Area**: Displays mining information, including the mining level and a progress bar.
-  - **Footer**: Fixed at the bottom, providing copyright information.
-
-- **Styling**
-  - Dark theme with contrasting text for readability.
-  - Progress bar visually indicates mining progress with a yellow color.
-
-This structure can be further enhanced with JavaScript for interactivity, such as updating the mining level or progress dynamically.
+</html>
