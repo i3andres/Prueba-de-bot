@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="Simple Clicker Web App">
-  <title>Clicker</title>
+  <meta name="description" content="Granja Clicker">
+  <title>Granja Clicker</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,74 +16,170 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      background: url('background-image.jpg') no-repeat center center/cover;
       overflow: hidden;
-      background: linear-gradient(45deg, #ff0066, #00b3b3, #ffcc00, #00b3b3);
-      background-size: 400% 400%;
-      animation: gradientAnimation 10s ease infinite;
+      color: #fff;
     }
 
-    @keyframes gradientAnimation {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+    /* Fondo dinámico */
+    @keyframes dynamicBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    h1 {
-      color: #323;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 10px 20px;
+    /* Estilo de la barra de energía */
+    .energy-bar {
+      width: 100%;
+      background: #333;
+      height: 20px;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+    .energy-fill {
+      height: 100%;
+      width: 100%;
+      background: #00ff00;
+      border-radius: 5px;
+      transition: width 1s ease;
+    }
+
+    /* Estilo de los cuadros y botones */
+    .box {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      margin: 10px;
       border-radius: 10px;
+      display: inline-block;
+      width: 250px;
+      text-align: center;
     }
 
-    #counter {
-      font-size: 3rem;
-      margin: 20px 0;
-      color: #007bff;
-      background: rgba(255, 255, 255, 0.8);
+    .button {
+      background: #ff0066;
       padding: 10px 20px;
-      border-radius: 10px;
-    }
-
-    #clickButton {
-      width: 150px;
-      height: 150px;
-      background-color: #ff0066;
       border: none;
-      border-radius: 50%;
+      border-radius: 5px;
       cursor: pointer;
-      transition: transform 0.2s;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
     }
 
-    #clickButton:hover {
+    .button:hover {
       transform: scale(1.1);
+    }
+
+    .stat {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+
+    /* Botón "Refill" */
+    #refillButton {
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Clicker Web App</h1>
-  <div id="counter">0</div>
-  <button id="clickButton"></button>
+
+  <h1>Granja Clicker</h1>
+
+  <div class="box" id="profile">
+    <img src="profile-pic.jpg" alt="Profile" width="50" height="50">
+    <div class="stat" id="playerName">Usuario</div>
+    <div class="stat" id="totalPoints">Puntos Totales: 0</div>
+    <div class="stat" id="wallet">Billetera: No conectada</div>
+    <input type="text" id="promoCode" placeholder="Ingrese código promocional">
+    <button class="button" id="applyPromo">Aplicar Código</button>
+  </div>
+
+  <div class="box" id="friends">
+    <div>👫</div>
+    <div class="stat" id="friendsCount">Amigos: 0</div>
+    <div class="stat" id="giftedPoints">Puntos Regalados: 0</div>
+    <button class="button" id="inviteFriends">Invitar Amigos</button>
+  </div>
+
+  <div class="box" id="games">
+    <div class="stat">Juegos: Coming Soon</div>
+  </div>
+
+  <div class="box" id="rewards">
+    <div class="stat">Bonificaciones de Puntos</div>
+    <button class="button">Reclamar Puntos</button>
+  </div>
+
+  <div class="box" id="boosts">
+    <div class="stat">Impulsos</div>
+    <button class="button">Aumentar Taps</button>
+    <button class="button">Aumentar Limite de Energía</button>
+    <button class="button">Añadir Cocodrilo</button>
+    <button class="button">Llenado de Energía</button>
+  </div>
+
+  <div class="energy-bar">
+    <div class="energy-fill" id="energyFill"></div>
+  </div>
+
+  <button class="button" id="clickButton">Cocodrilo Clicker</button>
+
+  <button id="refillButton" class="button">Refill Energía</button>
 
   <script>
-    // Inicializar contador
-    let count = 0;
+    let points = 0;
+    let energy = 100;
+    let maxEnergy = 100;
+    let lastRefill = Date.now();
 
-    // Referenciar elementos
-    const counterDisplay = document.getElementById("counter");
+    // Botón de click (Cocodrilo)
     const clickButton = document.getElementById("clickButton");
-
-    // Incrementar el contador al hacer clic
     clickButton.addEventListener("click", () => {
-      count++;
-      counterDisplay.textContent = count;
+      if (energy > 0) {
+        points++;
+        energy--;
+        document.getElementById("totalPoints").textContent = `Puntos Totales: ${points}`;
+        updateEnergyBar();
+      }
     });
+
+    // Actualizar barra de energía
+    function updateEnergyBar() {
+      const energyPercentage = (energy / maxEnergy) * 100;
+      document.getElementById("energyFill").style.width = energyPercentage + "%";
+    }
+
+    // Refill de energía
+    const refillButton = document.getElementById("refillButton");
+    refillButton.addEventListener("click", () => {
+      const now = Date.now();
+      if (now - lastRefill >= 86400000) { // 24 horas
+        energy = maxEnergy;
+        document.getElementById("energyFill").style.width = "100%";
+        lastRefill = now;
+      } else {
+        alert("Debes esperar 24 horas para recargar energía.");
+      }
+    });
+
+    // Aplicar código promocional
+    const applyPromoButton = document.getElementById("applyPromo");
+    applyPromoButton.addEventListener("click", () => {
+      const promoCode = document.getElementById("promoCode").value;
+      if (promoCode === "GRANJA10") {
+        points += 10;  // Por ejemplo, 10 puntos extras con el código promocional
+        document.getElementById("totalPoints").textContent = `Puntos Totales: ${points}`;
+        alert("Código promocional aplicado exitosamente.");
+      }
+    });
+
+    // Función para aumentar la energía por segundo
+    setInterval(() => {
+      if (energy < maxEnergy) {
+        energy++;
+        updateEnergyBar();
+      }
+    }, 1000); // Aumenta 1 de energía por segundo
+
   </script>
+
 </body>
 </html>
